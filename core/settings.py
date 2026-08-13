@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'accounts',
     'courses',
     'rest_framework',
+    'rest_framework.authtoken',
     'api',
+    
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
