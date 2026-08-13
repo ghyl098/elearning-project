@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}Student Dashboard{% endblock %}
+
+{% block extra_css %}
+<style>
+    .db-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+    .db-header h2 { color: #0f172a; font-weight: 700; font-size: 1.6rem; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .db-header p { color: #64748b; font-size: 0.9rem; margin: 0; }
+    .stat-card {
+        background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+        padding: 22px; display: flex; align-items: center; gap: 16px; transition: 0.2s ease;
+    }
+    .stat-card:hover { border-color: #bfdbfe; box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06); transform: translateY(-2px); }
+    .stat-icon { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .stat-num { font-size: 1.5rem; font-weight: 700; color: #0f172a; line-height: 1.1; }
+    .stat-lbl { font-size: 0.8rem; color: #64748b; }
+    .action-card {
+        background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+        padding: 24px; height: 100%; transition: 0.2s ease; display: block; color: inherit;
+    }
+    .action-card:hover { border-color: #bfdbfe; box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07); transform: translateY(-3px); color: inherit; }
+    .action-icon { width: 44px; height: 44px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; margin-bottom: 16px; }
+    .action-card h5 { color: #0f172a; font-weight: 600; font-size: 1rem; margin-bottom: 6px; }
+    .action-card p { color: #64748b; font-size: 0.85rem; margin: 0; }
+    .section-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; margin-bottom: 14px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <div class="db-header">
+        <div>
+            <h2>Welcome back, {{ user.username }}</h2>
+            <p>Here's a look at your academic progress.</p>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#eff6ff; color:#2563eb;"><i class="bi bi-journal-bookmark"></i></div>
+                <div><div class="stat-num">{{ total_courses }}</div><div class="stat-lbl">Enrolled courses</div></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#fef3c7; color:#b45309;"><i class="bi bi-award"></i></div>
+                <div><div class="stat-num">{{ total_grades }}</div><div class="stat-lbl">Grades recorded</div></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#f0fdf4; color:#16a34a;"><i class="bi bi-calendar-week"></i></div>
+                <div><div class="stat-num">{{ total_routines }}</div><div class="stat-lbl">Routine entries</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-label">Quick access</div>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <a href="{% url 'course_list' %}" class="action-card">
+                <div class="action-icon" style="background:#eff6ff; color:#2563eb;"><i class="bi bi-journal-bookmark"></i></div>
+                <h5>My Courses</h5>
+                <p>Courses you're currently enrolled in.</p>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'grade_list' %}" class="action-card">
+                <div class="action-icon" style="background:#fef3c7; color:#b45309;"><i class="bi bi-award"></i></div>
+                <h5>My Grades</h5>
+                <p>Check the marks you've received.</p>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'routine_list' %}" class="action-card">
+                <div class="action-icon" style="background:#f0fdf4; color:#16a34a;"><i class="bi bi-calendar-week"></i></div>
+                <h5>Routine</h5>
+                <p>Your weekly class schedule.</p>
+            </a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

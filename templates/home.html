@@ -1,0 +1,1569 @@
+{% extends 'base.html' %}
+
+{% block title %}
+EduPortal - Academic Management Platform
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero-section {
+        padding: 90px 0 85px;
+        background: #ffffff;
+    }
+
+    .hero-content {
+        max-width: 650px;
+    }
+
+    .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #eff6ff;
+        color: #1d4ed8;
+        border: 1px solid #dbeafe;
+        border-radius: 999px;
+        padding: 7px 13px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        margin-bottom: 22px;
+    }
+
+    .hero-eyebrow span {
+        width: 7px;
+        height: 7px;
+        background: #2563eb;
+        border-radius: 50%;
+    }
+
+    .hero-title {
+        color: #0f172a;
+        font-size: clamp(2.7rem, 5vw, 4.5rem);
+        line-height: 1.05;
+        letter-spacing: -0.055em;
+        font-weight: 700;
+        margin-bottom: 24px;
+    }
+
+    .hero-title .highlight {
+        color: #2563eb;
+    }
+
+    .hero-description {
+        color: #64748b;
+        font-size: 1.08rem;
+        line-height: 1.75;
+        max-width: 590px;
+        margin-bottom: 30px;
+    }
+
+    .hero-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .hero-primary-btn {
+        background: #2563eb;
+        border: 1px solid #2563eb;
+        color: white;
+        padding: 12px 21px;
+        border-radius: 7px;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .hero-primary-btn:hover {
+        background: #1d4ed8;
+        border-color: #1d4ed8;
+        color: white;
+    }
+
+    .hero-secondary-btn {
+        background: white;
+        border: 1px solid #dbe2ea;
+        color: #334155;
+        padding: 12px 21px;
+        border-radius: 7px;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .hero-secondary-btn:hover {
+        background: #f8fafc;
+        color: #1d4ed8;
+    }
+
+
+    /* =========================
+       HERO PREVIEW
+    ========================= */
+
+    .portal-preview {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 12px;
+        box-shadow: 0 25px 60px rgba(15, 23, 42, 0.08);
+    }
+
+    .preview-window {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .preview-topbar {
+        height: 45px;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        padding: 0 15px;
+        gap: 6px;
+    }
+
+    .window-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #cbd5e1;
+    }
+
+    .preview-body {
+        padding: 22px;
+    }
+
+    .preview-welcome {
+        background: #0f172a;
+        color: white;
+        border-radius: 9px;
+        padding: 20px;
+        margin-bottom: 18px;
+    }
+
+    .preview-welcome small {
+        color: #94a3b8;
+        font-size: 0.68rem;
+    }
+
+    .preview-welcome h5 {
+        font-size: 1rem;
+        margin: 5px 0 0;
+    }
+
+    .preview-grid {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 12px;
+    }
+
+    .preview-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 14px;
+    }
+
+    .preview-card-title {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #475569;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .preview-line {
+        height: 7px;
+        background: #f1f5f9;
+        border-radius: 5px;
+        margin-bottom: 8px;
+    }
+
+    .preview-line.short {
+        width: 65%;
+    }
+
+    .preview-event {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 11px;
+    }
+
+    .preview-event-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+    }
+
+    .preview-event-line {
+        flex: 1;
+    }
+
+    .preview-event-line div:first-child {
+        height: 6px;
+        background: #e2e8f0;
+        width: 75%;
+        border-radius: 4px;
+        margin-bottom: 5px;
+    }
+
+    .preview-event-line div:last-child {
+        height: 5px;
+        background: #f1f5f9;
+        width: 45%;
+        border-radius: 4px;
+    }
+
+
+    /* =========================
+       CONNECTED PLATFORM
+    ========================= */
+
+    .platform-section {
+        background: #f8fafc;
+        border-top: 1px solid #eef2f7;
+        border-bottom: 1px solid #eef2f7;
+        padding: 85px 0;
+    }
+
+    .platform-label {
+        color: #2563eb;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 12px;
+    }
+
+    .platform-title {
+        font-size: 2.35rem;
+        line-height: 1.25;
+        letter-spacing: -0.04em;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 18px;
+    }
+
+    .platform-description {
+        color: #64748b;
+        line-height: 1.75;
+        max-width: 560px;
+        margin-bottom: 0;
+    }
+
+    .platform-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .platform-item {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 20px;
+        transition: 0.2s ease;
+    }
+
+    .platform-item:hover {
+        border-color: #bfdbfe;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+    }
+
+    .platform-item-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 13px;
+    }
+
+    .platform-item h6 {
+        color: #0f172a;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .platform-item p {
+        color: #64748b;
+        font-size: 0.78rem;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+
+    /* =========================
+       FEATURES
+    ========================= */
+
+    .features-section {
+        padding: 90px 0;
+    }
+
+    .section-eyebrow {
+        color: #2563eb;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 10px;
+    }
+
+    .section-heading {
+        color: #0f172a;
+        font-size: 2.1rem;
+        letter-spacing: -0.035em;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .section-description {
+        color: #64748b;
+        line-height: 1.7;
+        max-width: 600px;
+    }
+
+    .feature-card {
+        height: 100%;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 27px;
+        transition: 0.2s ease;
+    }
+
+    .feature-card:hover {
+        border-color: #bfdbfe;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+        transform: translateY(-3px);
+    }
+
+    .feature-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.15rem;
+        margin-bottom: 20px;
+    }
+
+    .feature-card h5 {
+        color: #0f172a;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .feature-card p {
+        color: #64748b;
+        font-size: 0.86rem;
+        line-height: 1.65;
+        margin: 0;
+    }
+
+
+    /* =========================
+       ROLES
+    ========================= */
+
+    .roles-section {
+        background: #f8fafc;
+        padding: 90px 0;
+        border-top: 1px solid #eef2f7;
+        border-bottom: 1px solid #eef2f7;
+    }
+
+    .role-card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 30px;
+        height: 100%;
+    }
+
+    .role-card-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 20px;
+    }
+
+    .role-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.15rem;
+    }
+
+    .role-card h5 {
+        color: #0f172a;
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .role-card p {
+        color: #64748b;
+        font-size: 0.87rem;
+        line-height: 1.7;
+        margin-bottom: 18px;
+    }
+
+    .role-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .role-list li {
+        color: #475569;
+        font-size: 0.84rem;
+        margin-bottom: 10px;
+    }
+
+    .role-list i {
+        color: #2563eb;
+        margin-right: 7px;
+    }
+
+
+    /* =========================
+       ANNOUNCEMENTS
+    ========================= */
+
+    .announcement-section {
+        padding: 90px 0;
+    }
+
+    .announcement-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 9px;
+        padding: 20px;
+        background: white;
+        margin-bottom: 12px;
+        transition: 0.2s;
+    }
+
+    .announcement-card:hover {
+        border-color: #cbd5e1;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+    }
+
+    .announcement-meta {
+        color: #94a3b8;
+        font-size: 0.72rem;
+        margin-bottom: 7px;
+    }
+
+    .announcement-title {
+        color: #0f172a;
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .announcement-text {
+        color: #64748b;
+        font-size: 0.83rem;
+        line-height: 1.55;
+        margin: 0;
+    }
+
+    .side-panel {
+        background: #0f172a;
+        color: white;
+        border-radius: 12px;
+        padding: 32px;
+        height: 100%;
+        min-height: 100%;
+    }
+
+    .side-panel-label {
+        color: #93c5fd;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .side-panel h4 {
+        font-size: 1.45rem;
+        line-height: 1.4;
+        margin-bottom: 15px;
+    }
+
+    .side-panel p {
+        color: #94a3b8;
+        font-size: 0.84rem;
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
+
+    .side-points {
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 20px;
+    }
+
+    .side-point {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #cbd5e1;
+        font-size: 0.82rem;
+        margin-bottom: 13px;
+    }
+
+    .side-point i {
+        color: #60a5fa;
+    }
+
+
+    /* =========================
+       CTA
+    ========================= */
+
+    .cta-section {
+        padding: 0 0 90px;
+    }
+
+    .cta-box {
+        background: #2563eb;
+        border-radius: 12px;
+        padding: 50px 45px;
+        color: white;
+    }
+
+    .cta-box h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        margin-bottom: 12px;
+    }
+
+    .cta-box p {
+        color: #dbeafe;
+        font-size: 0.92rem;
+        line-height: 1.7;
+        max-width: 570px;
+        margin: 0;
+    }
+
+    .cta-btn {
+        background: white;
+        color: #1d4ed8;
+        border: none;
+        border-radius: 7px;
+        padding: 11px 20px;
+        font-size: 0.88rem;
+        font-weight: 600;
+    }
+
+    .cta-btn:hover {
+        background: #eff6ff;
+        color: #1d4ed8;
+    }
+
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 991px) {
+
+        .hero-section {
+            padding: 65px 0;
+        }
+
+        .hero-visual {
+            margin-top: 40px;
+        }
+
+        .platform-section,
+        .features-section,
+        .roles-section,
+        .announcement-section {
+            padding: 65px 0;
+        }
+
+    }
+
+
+    @media (max-width: 575px) {
+
+        .hero-title {
+            font-size: 2.55rem;
+        }
+
+        .hero-description {
+            font-size: 0.95rem;
+        }
+
+        .hero-actions {
+            display: block;
+        }
+
+        .hero-actions a {
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .portal-preview {
+            padding: 7px;
+        }
+
+        .preview-body {
+            padding: 14px;
+        }
+
+        .preview-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .platform-title {
+            font-size: 1.9rem;
+        }
+
+        .platform-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .section-heading {
+            font-size: 1.75rem;
+        }
+
+        .cta-box {
+            padding: 35px 25px;
+        }
+
+        .cta-box h2 {
+            font-size: 1.65rem;
+        }
+
+    }
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- ==================================================
+     HERO
+================================================== -->
+
+<section class="hero-section">
+
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-6">
+
+                <div class="hero-content">
+
+                    <div class="hero-eyebrow">
+
+                        <span></span>
+
+                        Academic management made simple
+
+                    </div>
+
+
+                    <h1 class="hero-title">
+
+                        Everything your
+                        <span class="highlight">classroom</span>
+                        needs, in one place.
+
+                    </h1>
+
+
+                    <p class="hero-description">
+
+                        EduPortal brings courses, grades, class routines,
+                        announcements and academic information together
+                        in one simple platform for students and teachers.
+
+                    </p>
+
+
+                    <div class="hero-actions">
+
+                        {% if not user.is_authenticated %}
+
+                            <a href="{% url 'register' %}"
+                               class="hero-primary-btn">
+
+                                Get started
+
+                                <i class="bi bi-arrow-right ms-1"></i>
+
+                            </a>
+
+
+                            <a href="{% url 'login' %}"
+                               class="hero-secondary-btn">
+
+                                Sign in
+
+                            </a>
+
+                        {% else %}
+
+                            <!-- ONLY DASHBOARD BUTTON ON LANDING PAGE -->
+
+                            <a href="{% url 'dashboard' %}"
+                               class="hero-primary-btn">
+
+                                Open dashboard
+
+                                <i class="bi bi-arrow-right ms-1"></i>
+
+                            </a>
+
+
+                            <a href="{% url 'routine_list' %}"
+                               class="hero-secondary-btn">
+
+                                View routine
+
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- WEBSITE PREVIEW -->
+
+            <div class="col-lg-6 hero-visual">
+
+                <div class="portal-preview">
+
+                    <div class="preview-window">
+
+                        <div class="preview-topbar">
+
+                            <span class="window-dot"></span>
+                            <span class="window-dot"></span>
+                            <span class="window-dot"></span>
+
+                        </div>
+
+
+                        <div class="preview-body">
+
+                            <div class="preview-welcome">
+
+                                <small>
+                                    STUDENT PORTAL
+                                </small>
+
+                                <h5>
+                                    Stay organized with your classes.
+                                </h5>
+
+                            </div>
+
+
+                            <div class="preview-grid">
+
+                                <div class="preview-card">
+
+                                    <div class="preview-card-title">
+                                        Courses
+                                    </div>
+
+                                    <div class="preview-line"></div>
+                                    <div class="preview-line short"></div>
+                                    <div class="preview-line"></div>
+                                    <div class="preview-line short"></div>
+
+                                </div>
+
+
+                                <div class="preview-card">
+
+                                    <div class="preview-card-title">
+                                        Schedule
+                                    </div>
+
+
+                                    <div class="preview-event">
+
+                                        <div class="preview-event-icon">
+                                            <i class="bi bi-calendar3"></i>
+                                        </div>
+
+                                        <div class="preview-event-line">
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="preview-event">
+
+                                        <div class="preview-event-icon">
+                                            <i class="bi bi-book"></i>
+                                        </div>
+
+                                        <div class="preview-event-line">
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     CONNECTED PLATFORM
+================================================== -->
+
+<section class="platform-section" id="about">
+
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+            <!-- LEFT -->
+
+            <div class="col-lg-5">
+
+                <div class="platform-label">
+                    One connected platform
+                </div>
+
+
+                <h2 class="platform-title">
+
+                    Everything important,
+                    connected in one place.
+
+                </h2>
+
+
+                <p class="platform-description">
+
+                    Instead of searching through different pages,
+                    messages and documents, EduPortal gives students
+                    and teachers a central place for everyday academic
+                    activities.
+
+                </p>
+
+            </div>
+
+
+            <!-- RIGHT -->
+
+            <div class="col-lg-7">
+
+                <div class="platform-grid">
+
+
+                    <div class="platform-item">
+
+                        <div class="platform-item-icon">
+
+                            <i class="bi bi-journal-bookmark"></i>
+
+                        </div>
+
+                        <h6>
+                            Courses
+                        </h6>
+
+                        <p>
+                            Keep course information organized and
+                            easy to access.
+                        </p>
+
+                    </div>
+
+
+                    <div class="platform-item">
+
+                        <div class="platform-item-icon">
+
+                            <i class="bi bi-award"></i>
+
+                        </div>
+
+                        <h6>
+                            Grades
+                        </h6>
+
+                        <p>
+                            Access academic marks and results
+                            from one place.
+                        </p>
+
+                    </div>
+
+
+                    <div class="platform-item">
+
+                        <div class="platform-item-icon">
+
+                            <i class="bi bi-calendar3"></i>
+
+                        </div>
+
+                        <h6>
+                            Routine
+                        </h6>
+
+                        <p>
+                            Follow your weekly class schedule
+                            with less confusion.
+                        </p>
+
+                    </div>
+
+
+                    <div class="platform-item">
+
+                        <div class="platform-item-icon">
+
+                            <i class="bi bi-megaphone"></i>
+
+                        </div>
+
+                        <h6>
+                            Announcements
+                        </h6>
+
+                        <p>
+                            Stay updated with important academic
+                            information and notices.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     FEATURES
+================================================== -->
+
+<section class="features-section" id="features">
+
+    <div class="container">
+
+        <div class="row mb-5">
+
+            <div class="col-lg-7">
+
+                <div class="section-eyebrow">
+                    Platform features
+                </div>
+
+
+                <h2 class="section-heading">
+
+                    Everything important,
+                    without the clutter.
+
+                </h2>
+
+
+                <p class="section-description">
+
+                    Keep the essential academic activities organized
+                    from one familiar interface.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="bi bi-journal-bookmark"></i>
+                    </div>
+
+                    <h5>
+                        Courses
+                    </h5>
+
+                    <p>
+                        Manage courses and keep track of the classes
+                        you are enrolled in.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="bi bi-award"></i>
+                    </div>
+
+                    <h5>
+                        Grades
+                    </h5>
+
+                    <p>
+                        Keep academic marks organized and make
+                        results easier to access.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="bi bi-calendar3"></i>
+                    </div>
+
+                    <h5>
+                        Class routine
+                    </h5>
+
+                    <p>
+                        View your weekly class schedule without
+                        having to search through messages.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="bi bi-megaphone"></i>
+                    </div>
+
+                    <h5>
+                        Announcements
+                    </h5>
+
+                    <p>
+                        Keep important academic notices and updates
+                        visible to the people who need them.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     ROLES
+================================================== -->
+
+<section class="roles-section">
+
+    <div class="container">
+
+        <div class="row mb-5">
+
+            <div class="col-lg-7">
+
+                <div class="section-eyebrow">
+                    Built for everyone
+                </div>
+
+
+                <h2 class="section-heading">
+
+                    Different roles.
+                    One connected system.
+
+                </h2>
+
+
+                <p class="section-description">
+
+                    EduPortal keeps the experience focused on what
+                    each member of the academic community needs.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- STUDENTS -->
+
+            <div class="col-md-6">
+
+                <div class="role-card">
+
+                    <div class="role-card-header">
+
+                        <div class="role-icon">
+
+                            <i class="bi bi-mortarboard"></i>
+
+                        </div>
+
+                        <h5>
+                            For Students
+                        </h5>
+
+                    </div>
+
+
+                    <p>
+
+                        Access your academic information from one
+                        organized place and stay aware of what is
+                        happening in your classes.
+
+                    </p>
+
+
+                    <ul class="role-list">
+
+                        <li>
+                            <i class="bi bi-check2"></i>
+                            View enrolled courses
+                        </li>
+
+                        <li>
+                            <i class="bi bi-check2"></i>
+                            Check grades and academic information
+                        </li>
+
+                        <li>
+                            <i class="bi bi-check2"></i>
+                            Follow the weekly class routine
+                        </li>
+
+                        <li>
+                            <i class="bi bi-check2"></i>
+                            Receive important announcements
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <!-- TEACHERS -->
+
+            <div class="col-md-6">
+
+                <div class="role-card">
+
+                    <div class="role-card-header">
+
+                        <div class="role-icon">
+
+                            <i class="bi bi-person-workspace"></i>
+
+                        </div>
+
+                        <h5>
+                            For Teachers
+                        </h5>
+
+                    </div>
+
+
+                    <p>
+
+                        Manage classroom information and keep students
+                        informed through a centralized academic system.
+
+                    </p>
+
+
+                    <ul class="role-list">
+
+                        <li>
+                            <i class="bi bi-check2"></i>
+                            Manage courses
+                        </li>
+
+                        <li>
+                            <i class="bi bi-check2"></i>
+                            Manage student academic records
+                        </li>
+
+                        <li>
+                            <i class="bi bi-check2"></i>
+                            Organize class schedules
+                        </li>
+
+                        <li>
+                            <i class="bi bi-check2"></i>
+                            Share important announcements
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     ANNOUNCEMENTS
+================================================== -->
+
+<section class="announcement-section"
+         id="announcements">
+
+    <div class="container">
+
+        <div class="row g-5">
+
+
+            <!-- LEFT -->
+
+            <div class="col-lg-7">
+
+                <div class="section-eyebrow">
+                    Stay informed
+                </div>
+
+
+                <h2 class="section-heading">
+
+                    Important information,
+                    right when you need it.
+
+                </h2>
+
+
+                <p class="section-description mb-4">
+
+                    Keep track of academic updates, schedule changes
+                    and other information shared through the platform.
+
+                </p>
+
+
+                <div class="announcement-card">
+
+                    <div class="announcement-meta">
+
+                        <i class="bi bi-megaphone me-1"></i>
+
+                        Academic notice
+
+                    </div>
+
+
+                    <div class="announcement-title">
+
+                        Important academic updates
+
+                    </div>
+
+
+                    <p class="announcement-text">
+
+                        Students and teachers can stay updated with
+                        announcements and information related to
+                        their academic activities.
+
+                    </p>
+
+                </div>
+
+
+                <div class="announcement-card">
+
+                    <div class="announcement-meta">
+
+                        <i class="bi bi-calendar-event me-1"></i>
+
+                        Schedule
+
+                    </div>
+
+
+                    <div class="announcement-title">
+
+                        Keep your class routine organized
+
+                    </div>
+
+
+                    <p class="announcement-text">
+
+                        Access the latest class schedule and keep
+                        track of your weekly academic routine.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RIGHT -->
+
+            <div class="col-lg-5">
+
+                <div class="side-panel">
+
+                    <div class="side-panel-label">
+
+                        Academic workspace
+
+                    </div>
+
+
+                    <h4>
+
+                        A simpler way to manage
+                        everyday classroom activities.
+
+                    </h4>
+
+
+                    <p>
+
+                        From your first class of the week to your
+                        latest academic update, EduPortal keeps
+                        essential information within easy reach.
+
+                    </p>
+
+
+                    <!-- No dashboard button here -->
+
+                    <div class="side-points">
+
+                        <div class="side-point">
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Organized academic information
+
+                        </div>
+
+
+                        <div class="side-point">
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Simple student experience
+
+                        </div>
+
+
+                        <div class="side-point">
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Dedicated teacher tools
+
+                        </div>
+
+
+                        <div class="side-point">
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            Easy access from one platform
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     FINAL CTA
+================================================== -->
+
+<section class="cta-section">
+
+    <div class="container">
+
+        <div class="cta-box">
+
+            <div class="row align-items-center g-4">
+
+
+                <div class="col-lg-8">
+
+                    <h2>
+
+                        Ready to organize your classroom?
+
+                    </h2>
+
+
+                    <p>
+
+                        Bring courses, grades, routines and academic
+                        updates together with EduPortal.
+
+                    </p>
+
+                </div>
+
+
+                <div class="col-lg-4 text-lg-end">
+
+                    {% if not user.is_authenticated %}
+
+                        <a href="{% url 'register' %}"
+                           class="cta-btn">
+
+                            Get started
+
+                            <i class="bi bi-arrow-right ms-1"></i>
+
+                        </a>
+
+                    {% else %}
+
+                        <!-- No duplicate dashboard button -->
+
+                        <a href="#features"
+                           class="cta-btn">
+
+                            Explore features
+
+                            <i class="bi bi-arrow-down ms-1"></i>
+
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Grades{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .page-header h2 { color: #0f172a; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .page-header p { color: #64748b; font-size: 0.9rem; margin: 0; }
+    .btn-primary-edu { background: #2563eb; border: 1px solid #2563eb; color: white; font-size: 0.88rem; font-weight: 600; padding: 9px 18px; border-radius: 7px; }
+    .btn-primary-edu:hover { background: #1d4ed8; border-color: #1d4ed8; color: white; }
+    .data-table-card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
+    .data-table { width: 100%; margin: 0; }
+    .data-table thead th { background: #f8fafc; color: #64748b; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 20px; border-bottom: 1px solid #e5e7eb; }
+    .data-table tbody td { padding: 14px 20px; font-size: 0.88rem; color: #334155; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+    .data-table tbody tr:last-child td { border-bottom: none; }
+    .data-table tbody tr:hover { background: #f8fafc; }
+    .marks-badge { background: #eff6ff; color: #1d4ed8; font-weight: 700; padding: 3px 10px; border-radius: 6px; font-size: 0.85rem; }
+    .empty-state { padding: 50px 20px; text-align: center; color: #94a3b8; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="page-header">
+        <div>
+            <h2>{% if user.role == 'teacher' %}Student Grades{% else %}My Grades{% endif %}</h2>
+            <p>{% if user.role == 'teacher' %}Marks recorded across your courses{% else %}Your academic performance{% endif %}</p>
+        </div>
+        {% if user.role == 'teacher' %}
+            <a href="{% url 'grade_add' %}" class="btn-primary-edu"><i class="bi bi-plus-lg me-1"></i>Add Grade</a>
+        {% endif %}
+    </div>
+
+    <div class="data-table-card">
+        {% if grades %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    {% if user.role == 'teacher' %}<th>Student</th>{% endif %}
+                    <th>Course</th>
+                    <th>Marks</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for grade in grades %}
+                <tr>
+                    {% if user.role == 'teacher' %}<td>{{ grade.student.username }}</td>{% endif %}
+                    <td>{{ grade.course.name }}</td>
+                    <td><span class="marks-badge">{{ grade.marks }}</span></td>
+                    <td>{{ grade.remarks|default:"-" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <i class="bi bi-award fs-2 mb-2 d-block"></i>
+            No grades found.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
