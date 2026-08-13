@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Notices{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .page-header h2 { color: #0f172a; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .page-header p { color: #64748b; font-size: 0.9rem; margin: 0; }
+    .btn-primary-edu { background: #2563eb; border: 1px solid #2563eb; color: white; font-size: 0.88rem; font-weight: 600; padding: 9px 18px; border-radius: 7px; }
+    .btn-primary-edu:hover { background: #1d4ed8; border-color: #1d4ed8; color: white; }
+    .notice-card { background: white; border: 1px solid #e5e7eb; border-left: 4px solid #2563eb; border-radius: 10px; padding: 18px 20px; margin-bottom: 12px; }
+    .notice-title { color: #0f172a; font-weight: 600; font-size: 0.98rem; margin-bottom: 4px; }
+    .notice-meta { color: #94a3b8; font-size: 0.75rem; margin-bottom: 8px; }
+    .notice-body { color: #64748b; font-size: 0.87rem; line-height: 1.55; }
+    .btn-del { color: #dc2626; font-size: 0.8rem; text-decoration: none; }
+    .btn-del:hover { text-decoration: underline; }
+    .empty-state { background: white; border: 1px dashed #e2e8f0; border-radius: 12px; padding: 50px 20px; text-align: center; color: #94a3b8; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="page-header">
+        <div>
+            <h2>Notices</h2>
+            <p>{% if user.role == 'teacher' %}Announcements you've posted{% else %}Latest updates for your courses{% endif %}</p>
+        </div>
+        {% if user.role == 'teacher' %}
+            <a href="{% url 'notice_add' %}" class="btn-primary-edu"><i class="bi bi-plus-lg me-1"></i>Post Notice</a>
+        {% endif %}
+    </div>
+
+    {% for notice in notices %}
+    <div class="notice-card">
+        <div class="notice-title">{{ notice.title }}</div>
+        <div class="notice-meta">
+            {{ notice.created_at|date:"M d, Y" }}
+            {% if notice.course %} &middot; {{ notice.course.name }}{% else %} &middot; General{% endif %}
+        </div>
+        <div class="notice-body">{{ notice.message }}</div>
+        {% if user.role == 'teacher' %}
+            <a href="{% url 'notice_delete' notice.pk %}" class="btn-del mt-2 d-inline-block" onclick="return confirm('Delete this notice?')">Delete</a>
+        {% endif %}
+    </div>
+    {% empty %}
+    <div class="empty-state">
+        <i class="bi bi-megaphone fs-2 mb-2 d-block"></i>
+        No notices yet.
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

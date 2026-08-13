@@ -3,19 +3,96 @@
 
 {% block extra_css %}
 <style>
-    .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-    .page-header h2 { color: #0f172a; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 4px; }
-    .page-header p { color: #64748b; font-size: 0.9rem; margin: 0; }
-    .btn-primary-edu { background: #2563eb; border: 1px solid #2563eb; color: white; font-size: 0.88rem; font-weight: 600; padding: 9px 18px; border-radius: 7px; }
-    .btn-primary-edu:hover { background: #1d4ed8; border-color: #1d4ed8; color: white; }
-    .data-table-card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
-    .data-table { width: 100%; margin: 0; }
-    .data-table thead th { background: #f8fafc; color: #64748b; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 20px; border-bottom: 1px solid #e5e7eb; }
-    .data-table tbody td { padding: 14px 20px; font-size: 0.88rem; color: #334155; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
-    .data-table tbody tr:last-child td { border-bottom: none; }
-    .data-table tbody tr:hover { background: #f8fafc; }
-    .day-badge { background: #f0fdf4; color: #16a34a; font-weight: 700; padding: 3px 10px; border-radius: 6px; font-size: 0.8rem; }
-    .empty-state { padding: 50px 20px; text-align: center; color: #94a3b8; }
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+    .page-header h2 {
+        color: #0f172a;
+        font-weight: 700;
+        font-size: 1.5rem;
+        letter-spacing: -0.02em;
+        margin-bottom: 4px;
+    }
+
+    .page-header p {
+        color: #64748b;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .btn-primary-edu {
+        background: #2563eb;
+        border: 1px solid #2563eb;
+        color: white;
+        font-size: 0.88rem;
+        font-weight: 600;
+        padding: 9px 18px;
+        border-radius: 7px;
+    }
+
+    .btn-primary-edu:hover {
+        background: #1d4ed8;
+        border-color: #1d4ed8;
+        color: white;
+    }
+
+    .data-table-card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .data-table {
+        width: 100%;
+        margin: 0;
+    }
+
+    .data-table thead th {
+        background: #f8fafc;
+        color: #64748b;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 14px 20px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .data-table tbody td {
+        padding: 14px 20px;
+        font-size: 0.88rem;
+        color: #334155;
+        border-bottom: 1px solid #f1f5f9;
+        vertical-align: middle;
+    }
+
+    .data-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .data-table tbody tr:hover {
+        background: #f8fafc;
+    }
+
+    .day-badge {
+        background: #f0fdf4;
+        color: #16a34a;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+    }
+
+    .empty-state {
+        padding: 50px 20px;
+        text-align: center;
+        color: #94a3b8;
+    }
 </style>
 {% endblock %}
 
@@ -27,7 +104,7 @@
             <p>Weekly schedule for your courses</p>
         </div>
         {% if user.role == 'teacher' %}
-            <a href="{% url 'routine_add' %}" class="btn-primary-edu"><i class="bi bi-plus-lg me-1"></i>Add Routine</a>
+        <a href="{% url 'routine_add' %}" class="btn-primary-edu"><i class="bi bi-plus-lg me-1"></i>Add Routine</a>
         {% endif %}
     </div>
 
@@ -40,6 +117,7 @@
                     <th>Day</th>
                     <th>Start Time</th>
                     <th>End Time</th>
+                    {% if user.role == 'teacher' %}<th>Actions</th>{% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -49,6 +127,14 @@
                     <td><span class="day-badge">{{ routine.get_day_display }}</span></td>
                     <td>{{ routine.start_time }}</td>
                     <td>{{ routine.end_time }}</td>
+                    {% if user.role == 'teacher' %}
+                    <td>
+                        <a href="{% url 'routine_edit' routine.pk %}" class="text-primary me-2" title="Edit"><i
+                                class="bi bi-pencil"></i></a>
+                        <a href="{% url 'routine_delete' routine.pk %}" class="text-danger" title="Delete"
+                            onclick="return confirm('Delete this routine entry?')"><i class="bi bi-trash"></i></a>
+                    </td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>

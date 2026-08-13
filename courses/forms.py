@@ -64,3 +64,34 @@ class RoutineForm(forms.ModelForm):
         teacher = kwargs.pop('teacher')
         super().__init__(*args, **kwargs)
         self.fields['course'].queryset = Course.objects.filter(teacher=teacher)
+        
+from .models import Notice
+
+class NoticeForm(forms.ModelForm):
+    class Meta:
+        model = Notice
+        fields = ['title', 'message', 'course']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'message': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'course': forms.Select(attrs={'class': 'form-select'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        teacher = kwargs.pop('teacher')
+        super().__init__(*args, **kwargs)
+        self.fields['course'].queryset = Course.objects.filter(teacher=teacher)
+        self.fields['course'].required = False
+        
+from .models import Lesson
+
+class LessonForm(forms.ModelForm):
+    class Meta:
+        model = Lesson
+        fields = ['title', 'content', 'resource_link', 'order']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'resource_link': forms.URLInput(attrs={'class': 'form-control'}),
+            'order': forms.NumberInput(attrs={'class': 'form-control'}),
+        }

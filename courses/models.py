@@ -45,3 +45,30 @@ class Grade(models.Model):
 
     def __str__(self):
         return f"{self.student.username} - {self.course.name}: {self.marks}"
+    
+class Notice(models.Model):
+    title = models.CharField(max_length=200)
+    message = models.TextField()
+    posted_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notices')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='notices', null=True, blank=True, help_text="Leave empty for a general notice")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.title
+    
+class Lesson(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
+    title = models.CharField(max_length=200)
+    content = models.TextField(help_text="Lesson notes, explanation, or instructions")
+    resource_link = models.URLField(blank=True, help_text="Optional link to video, PDF, or slides")
+    order = models.PositiveIntegerField(default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['order', 'created_at']
+
+    def __str__(self):
+        return f"{self.course.name} - {self.title}"
