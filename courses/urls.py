@@ -34,4 +34,5 @@ urlpatterns = [
     path('attendance/select/', views.attendance_select, name='attendance_select'),
     path('attendance/<int:pk>/<str:date_str>/', views.attendance_mark, name='attendance_mark'),
     path('attendance/report/', views.attendance_report, name='attendance_report'),
+    path('students/', views.student_list, name='student_list'),
 ]

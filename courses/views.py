@@ -435,3 +435,13 @@ def attendance_report(request):
             percent = round((present / total) * 100, 1) if total > 0 else 0
             course_data.append({'course': course, 'total': total, 'present': present, 'percent': percent})
         return render(request, 'courses/attendance_report.html', {'course_data': course_data, 'is_teacher': False})
+    
+from accounts.models import User
+
+@login_required
+def student_list(request):
+    if request.user.role != 'teacher':
+        messages.error(request, "Only teachers can view students.")
+        return redirect('dashboard')
+    students = User.objects.filter(role='student').order_by('username')
+    return render(request, 'courses/student_list.html', {'students': students})

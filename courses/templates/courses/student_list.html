@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Students{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .page-header h2 { color: #0f172a; font-weight: 700; font-size: 1.5rem; margin-bottom: 4px; }
+    .page-header p { color: #64748b; font-size: 0.9rem; margin: 0; }
+    .data-table-card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
+    .data-table { width: 100%; margin: 0; }
+    .data-table thead th { background: #f8fafc; color: #64748b; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; padding: 14px 20px; border-bottom: 1px solid #e5e7eb; }
+    .data-table tbody td { padding: 14px 20px; font-size: 0.88rem; color: #334155; border-bottom: 1px solid #f1f5f9; }
+    .data-table tbody tr:last-child td { border-bottom: none; }
+    .avatar-sm { width: 32px; height: 32px; border-radius: 50%; background: #dbeafe; color: #1d4ed8; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; margin-right: 10px; }
+    .empty-state { padding: 50px 20px; text-align: center; color: #94a3b8; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="page-header">
+        <div>
+            <h2>All Students</h2>
+            <p>Everyone registered as a student on EduPortal</p>
+        </div>
+    </div>
+    <div class="data-table-card">
+        {% if students %}
+        <table class="data-table">
+            <thead><tr><th>Student</th><th>Email</th><th>Phone</th></tr></thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td><span class="avatar-sm">{{ student.username|slice:":2"|upper }}</span>{{ student.username }}</td>
+                    <td>{{ student.email|default:"-" }}</td>
+                    <td>{{ student.phone|default:"-" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state"><i class="bi bi-people fs-2 mb-2 d-block"></i>No students registered yet.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
