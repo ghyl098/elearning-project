@@ -42,10 +42,25 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'api',
+    'drf_spectacular',
     
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
+REST_FRAMEWORK = {
+    # Use Token Authentication for the API
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+
+    # Require authentication by default
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+
+    # Generate OpenAPI schema using drf-spectacular
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
@@ -135,5 +150,33 @@ STATIC_URL = 'static/'
 MAILERS = {
     'default': {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
+    },
+}
+
+
+# Swagger / OpenAPI configuration
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'E-Learning Management System API',
+    'DESCRIPTION': (
+        'REST API for the E-Learning Management System, '
+        'including courses, enrollments, lessons, grades, routines, and notices.'
+    ),
+    'VERSION': '1.0.0',
+
+    # Define Token Authentication for Swagger
+    'APPEND_COMPONENTS': {
+        'securitySchemes': {
+            'TokenAuth': {
+                'type': 'apiKey',
+                'in': 'header',
+                'name': 'Authorization',
+                'description': 'Enter: Token <your-token>',
+            }
+        }
+    },
+
+    # Keep authentication when Swagger is refreshed
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True,
     },
 }
