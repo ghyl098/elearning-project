@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Submit Assignment{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 24px;
+        max-width: 500px;
+    }
+    .form-card h3 {
+        color: #0f172a;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .form-card p {
+        color: #64748b;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+    .btn-primary-edu {
+        background: #2563eb;
+        border: 1px solid #2563eb;
+        color: white;
+        font-size: 0.88rem;
+        font-weight: 600;
+        padding: 9px 18px;
+        border-radius: 7px;
+    }
+    .btn-primary-edu:hover {
+        background: #1d4ed8;
+        border-color: #1d4ed8;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="form-card">
+        <h3>{{ assignment.title }}</h3>
+        <p>Due: {{ assignment.due_date }}</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-primary-edu mt-2">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

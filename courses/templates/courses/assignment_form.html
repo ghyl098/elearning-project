@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}{% if editing %}Edit Assignment{% else %}Add Assignment{% endif %}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 24px;
+        max-width: 500px;
+    }
+    .form-card h3 {
+        color: #0f172a;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    .btn-primary-edu {
+        background: #2563eb;
+        border: 1px solid #2563eb;
+        color: white;
+        font-size: 0.88rem;
+        font-weight: 600;
+        padding: 9px 18px;
+        border-radius: 7px;
+    }
+    .btn-primary-edu:hover {
+        background: #1d4ed8;
+        border-color: #1d4ed8;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="form-card">
+        <h3>{% if editing %}Edit Assignment{% else %}Add Assignment{% endif %}</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-primary-edu mt-2">{% if editing %}Save Changes{% else %}Add Assignment{% endif %}</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -47,3 +47,4 @@ def dashboard_view(request):
             'total_routines': Routine.objects.filter(course_id__in=enrolled_ids).count(),
         }
         return render(request, 'accounts/student_dashboard.html', context)
+    

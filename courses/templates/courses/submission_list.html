@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Submissions{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header { margin-bottom: 24px; }
+    .page-header h2 { color: #0f172a; font-weight: 700; margin-bottom: 4px; }
+    .page-header p { color: #64748b; font-size: 0.9rem; margin: 0; }
+
+    .data-table-card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
+    .data-table { width: 100%; margin: 0; }
+    .data-table thead th { background: #f8fafc; color: #64748b; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 12px 18px; border-bottom: 1px solid #e5e7eb; }
+    .data-table tbody td { padding: 12px 18px; font-size: 0.87rem; color: #334155; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+    .data-table tbody tr:last-child td { border-bottom: none; }
+    .empty-state { padding: 40px 20px; text-align: center; color: #94a3b8; }
+
+    .btn-primary-edu { background: #2563eb; border: 1px solid #2563eb; color: white; font-size: 0.82rem; font-weight: 600; padding: 6px 14px; border-radius: 6px; }
+    .btn-primary-edu:hover { background: #1d4ed8; border-color: #1d4ed8; color: white; }
+
+    .graded-badge { background: #f0fdf4; color: #16a34a; font-weight: 700; padding: 3px 10px; border-radius: 6px; font-size: 0.8rem; }
+    .pending-badge { background: #fef3c7; color: #b45309; font-weight: 700; padding: 3px 10px; border-radius: 6px; font-size: 0.8rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="page-header">
+        <h2>Submissions</h2>
+        <p>{{ assignment.title }} - {{ assignment.course.name }}</p>
+    </div>
+
+    <div class="data-table-card">
+        {% if submissions %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Submitted On</th>
+                    <th>Marks</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for submission in submissions %}
+                <tr>
+                    <td>{{ submission.student.username }}</td>
+                    <td>{{ submission.submitted_at }}</td>
+                    <td>{{ submission.marks|default:"-" }}</td>
+                    <td>
+                        {% if submission.graded_at %}
+                            <span class="graded-badge">Graded</span>
+                        {% else %}
+                            <span class="pending-badge">Pending</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'submission_grade' submission.pk %}" class="btn-primary-edu">{% if submission.graded_at %}Edit Grade{% else %}Grade{% endif %}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <i class="bi bi-inbox fs-2 mb-2 d-block"></i>
+            No submissions yet.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

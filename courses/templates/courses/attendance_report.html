@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Attendance Report{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header { margin-bottom: 24px; }
+    .page-header h2 { color: #0f172a; font-weight: 700; margin-bottom: 4px; }
+    .page-header p { color: #64748b; font-size: 0.9rem; margin: 0; }
+
+    .data-table-card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
+    .data-table { width: 100%; margin: 0; }
+    .data-table thead th { background: #f8fafc; color: #64748b; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 12px 18px; border-bottom: 1px solid #e5e7eb; }
+    .data-table tbody td { padding: 12px 18px; font-size: 0.87rem; color: #334155; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+    .data-table tbody tr:last-child td { border-bottom: none; }
+    .empty-state { padding: 40px 20px; text-align: center; color: #94a3b8; }
+
+    .percent-good { color: #16a34a; font-weight: 700; }
+    .percent-low { color: #dc2626; font-weight: 700; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="page-header">
+        <h2>Attendance Report</h2>
+        <p>{% if is_teacher %}Total classes conducted per course{% else %}Your attendance summary{% endif %}</p>
+    </div>
+
+    <div class="data-table-card">
+        {% if course_data %}
+        <table class="data-table">
+            {% if is_teacher %}
+            <thead>
+                <tr><th>Course</th><th>Total Days Conducted</th></tr>
+            </thead>
+            <tbody>
+                {% for item in course_data %}
+                <tr>
+                    <td>{{ item.course.name }}</td>
+                    <td>{{ item.total_days }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            {% else %}
+            <thead>
+                <tr><th>Course</th><th>Present</th><th>Total</th><th>Percentage</th></tr>
+            </thead>
+            <tbody>
+                {% for item in course_data %}
+                <tr>
+                    <td>{{ item.course.name }}</td>
+                    <td>{{ item.present }}</td>
+                    <td>{{ item.total }}</td>
+                    <td class="{% if item.percent >= 75 %}percent-good{% else %}percent-low{% endif %}">{{ item.percent }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            {% endif %}
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <i class="bi bi-calendar-check fs-2 mb-2 d-block"></i>
+            No attendance data yet.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}  

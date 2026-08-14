@@ -19,7 +19,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="form-card">
-                <h3>Add Lesson</h3>
+                <h3>{% if editing %}Edit Lesson{% else %}Add Lesson{% endif %}</h3>
                 <p class="sub">{{ course.name }}</p>
                 <form method="post">
                     {% csrf_token %}
@@ -29,7 +29,7 @@
                             {{ field }}
                         </div>
                     {% endfor %}
-                    <button type="submit" class="btn-primary-edu mt-2">Add Lesson</button>
+                    <button type="submit" class="btn-primary-edu mt-2">{% if editing %}Save Changes{% else %}Add Lesson{% endif %}</button>
                 </form>
             </div>
         </div>

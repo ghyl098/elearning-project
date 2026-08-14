@@ -95,3 +95,49 @@ class LessonForm(forms.ModelForm):
             'resource_link': forms.URLInput(attrs={'class': 'form-control'}),
             'order': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+        
+from .models import Assignment, Submission
+
+class AssignmentForm(forms.ModelForm):
+    class Meta:
+        model = Assignment
+        fields = ['course', 'title', 'description', 'due_date']
+        widgets = {
+            'course': forms.Select(attrs={'class': 'form-select'}),
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'due_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        teacher = kwargs.pop('teacher')
+        super().__init__(*args, **kwargs)
+        self.fields['course'].queryset = Course.objects.filter(teacher=teacher)
+
+
+class SubmissionForm(forms.ModelForm):
+    class Meta:
+        model = Submission
+        fields = ['submission_text', 'submission_link']
+        widgets = {
+            'submission_text': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'submission_link': forms.URLInput(attrs={'class': 'form-control'}),
+        }
+        
+class GradeSubmissionForm(forms.ModelForm):
+    class Meta:
+        model = Submission
+        fields = ['marks', 'feedback']
+        widgets = {
+            'marks': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+            'feedback': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+        }
+        
+class AttendanceFilterForm(forms.Form):
+    course = forms.ModelChoiceField(queryset=None, widget=forms.Select(attrs={'class': 'form-select'}))
+    date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}))
+
+    def __init__(self, *args, teacher=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        if teacher:
+            self.fields['course'].queryset = Course.objects.filter(teacher=teacher)

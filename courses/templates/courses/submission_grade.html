@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Grade Submission{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; max-width: 550px; }
+    .form-card h3 { color: #0f172a; font-weight: 700; margin-bottom: 4px; }
+    .form-card .sub { color: #64748b; font-size: 0.85rem; margin-bottom: 20px; }
+
+    .submission-preview { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; }
+    .submission-preview .label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; margin-bottom: 6px; }
+    .submission-preview .text { font-size: 0.87rem; color: #334155; line-height: 1.5; }
+    .submission-preview a { font-size: 0.85rem; color: #2563eb; font-weight: 600; }
+
+    .btn-primary-edu { background: #2563eb; border: 1px solid #2563eb; color: white; font-size: 0.88rem; font-weight: 600; padding: 9px 18px; border-radius: 7px; }
+    .btn-primary-edu:hover { background: #1d4ed8; border-color: #1d4ed8; color: white; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="form-card">
+        <h3>Grade Submission</h3>
+        <div class="sub">{{ submission.student.username }} - {{ submission.assignment.title }}</div>
+
+        <div class="submission-preview">
+            <div class="label">Submission Text</div>
+            <div class="text">{{ submission.submission_text|default:"No text submitted." }}</div>
+            {% if submission.submission_link %}
+                <div class="mt-2"><a href="{{ submission.submission_link }}" target="_blank"><i class="bi bi-link-45deg"></i>View submitted link</a></div>
+            {% endif %}
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-primary-edu mt-2">Save Grade</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
