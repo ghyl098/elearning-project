@@ -5,6 +5,8 @@ from .views import (
     CourseDetailAPIView,
     EnrollmentListAPIView,
     EnrollmentDetailAPIView,
+    RoutineListAPIView,
+    RoutineDetailAPIView
 )
 
 
@@ -34,5 +36,15 @@ urlpatterns = [
         'enrollments/<int:id>/',
         EnrollmentDetailAPIView.as_view(),
         name='api_enrollment_detail'
+    ),
+    path(
+        'routines/',
+        RoutineListAPIView.as_view(),
+        name='api_routine_list'
+    ),
+    path(
+        'routines/<int:id>/',
+        RoutineDetailAPIView.as_view(),
+        name='api_routine_detail'
     ),
 ]

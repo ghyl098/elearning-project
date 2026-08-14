@@ -2,8 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from courses.models import Course, Enrollment
-from .serializers import CourseSerializer, EnrollmentSerializer
+from courses.models import Course, Enrollment, Routine
+from .serializers import CourseSerializer, EnrollmentSerializer, RoutineSerializer
 
 from django.shortcuts import get_object_or_404
 
@@ -241,6 +241,115 @@ class EnrollmentDetailAPIView(APIView):
         )
 
         enrollment.delete()
+
+        return Response(
+            status=status.HTTP_204_NO_CONTENT
+        )
+        
+
+# ROUTINE API
+
+
+class RoutineListAPIView(APIView):
+
+    # Only authenticated users can access routines
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        # Teachers and students can view routines
+        routines = Routine.objects.all()
+
+        serializer = RoutineSerializer(
+            routines,
+            many=True
+        )
+
+        return Response(serializer.data)
+
+    def post(self, request):
+        # Only teachers can create routines
+        if request.user.role != 'teacher':
+            return Response(
+                {'detail': 'Only teachers can create routines.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        serializer = RoutineSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+
+class RoutineDetailAPIView(APIView):
+
+    # Only authenticated users can access routines
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, id):
+        # Teachers and students can view a routine
+        routine = get_object_or_404(
+            Routine,
+            id=id
+        )
+
+        serializer = RoutineSerializer(routine)
+
+        return Response(serializer.data)
+
+    def put(self, request, id):
+        routine = get_object_or_404(
+            Routine,
+            id=id
+        )
+
+        # Only teachers can modify routines
+        if request.user.role != 'teacher':
+            return Response(
+                {'detail': 'Only teachers can modify routines.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        serializer = RoutineSerializer(
+            routine,
+            data=request.data
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(serializer.data)
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    def delete(self, request, id):
+        routine = get_object_or_404(
+            Routine,
+            id=id
+        )
+
+        # Only teachers can delete routines
+        if request.user.role != 'teacher':
+            return Response(
+                {'detail': 'Only teachers can delete routines.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        routine.delete()
 
         return Response(
             status=status.HTTP_204_NO_CONTENT
